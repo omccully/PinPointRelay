@@ -1,0 +1,9 @@
+C:\Users\Oscar\AppData\Local\Temporary Projects\PinPointRelay\obj\x86\Debug\PinPointRelay.Properties.Resources.resources
+C:\Users\Oscar\AppData\Local\Temporary Projects\PinPointRelay\obj\x86\Debug\PinPointRelay.csproj.GenerateResource.Cache
+C:\Users\Oscar\AppData\Local\Temporary Projects\PinPointRelay\bin\Debug\PinPointRelay.exe
+C:\Users\Oscar\AppData\Local\Temporary Projects\PinPointRelay\bin\Debug\PinPointRelay.pdb
+C:\Users\Oscar\AppData\Local\Temporary Projects\PinPointRelay\obj\x86\Debug\PinPointRelay.exe
+C:\Users\Oscar\AppData\Local\Temporary Projects\PinPointRelay\obj\x86\Debug\PinPointRelay.pdb
+C:\Users\Oscar\AppData\Local\Temporary Projects\PinPointRelay\obj\x86\Debug\PinPointRelay.Form1.resources
+C:\Users\Oscar\documents\visual studio 2010\Projects\PinPointRelay\PinPointRelay\obj\x86\Debug\PinPointRelay.exe
+C:\Users\Oscar\documents\visual studio 2010\Projects\PinPointRelay\PinPointRelay\obj\x86\Debug\PinPointRelay.pdb

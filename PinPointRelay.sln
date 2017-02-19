@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinPointRelay", "PinPointRelay\PinPointRelay.csproj", "{CB994F6E-58FB-4E82-BF49-0E1AB24C2275}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB994F6E-58FB-4E82-BF49-0E1AB24C2275}.Debug|x86.ActiveCfg = Debug|x86
+		{CB994F6E-58FB-4E82-BF49-0E1AB24C2275}.Debug|x86.Build.0 = Debug|x86
+		{CB994F6E-58FB-4E82-BF49-0E1AB24C2275}.Release|x86.ActiveCfg = Release|x86
+		{CB994F6E-58FB-4E82-BF49-0E1AB24C2275}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
