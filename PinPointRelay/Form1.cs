@@ -23,6 +23,7 @@ namespace PinPointRelay
 
         string COMPortName { get; set; }
         string WebServerAddress { get; set; }
+        string IDCode { get; set; }
 
         Thread ReadThread { get; set; }
         SerialPort sp { get; set; }
@@ -32,6 +33,8 @@ namespace PinPointRelay
             InitializeComponent();
 
             RefreshButton_Click(null, null);
+
+            IDCode = RandomIDString();
 
             try
             {
@@ -57,6 +60,7 @@ namespace PinPointRelay
                 {
                     string line = sp.ReadLine().Replace("\n", "").Replace("\r", "");
                     LogLine(line);
+                    SendLineToServer(line);
                 }
                 catch { }
             }
@@ -132,6 +136,11 @@ namespace PinPointRelay
         /// <param name="line"></param>
         private void LogLine(string line)
         {
+            if (!Directory.Exists(PinpointFolder))
+            {
+                Directory.CreateDirectory(PinpointFolder);
+            }
+
             string FullLine = DateTime.UtcNow.ToString("s") + " " + line + Environment.NewLine;
             File.AppendAllText(PinpointLogFile, FullLine);
 
@@ -175,6 +184,9 @@ namespace PinPointRelay
                         case "weburl":
                             WebServerAddressBox.Text = optionvalue;
                             break;
+                        case "idcode":
+                            IDCode = optionvalue;
+                            break;
                     }
                 }
                 catch { }
@@ -193,7 +205,8 @@ namespace PinPointRelay
 
             File.WriteAllLines(PinpointOptionsFile, new string[] {
                 "comport=" + COMPortName,
-                "weburl=" + WebServerAddress
+                "weburl=" + WebServerAddress,
+                "idcode=" + IDCode
             });
         }
 
@@ -227,7 +240,7 @@ namespace PinPointRelay
         private void SendLineToServer(string line)
         {
             // this is what we are sending
-            string post_data = "nmea=" + Uri.EscapeDataString(line);
+            string post_data = "nmea=" + Uri.EscapeDataString(line) + "&id_code=" + IDCode;
             // MessageBox.Show(post_data);
 
             // this is where we will send it
@@ -259,10 +272,13 @@ namespace PinPointRelay
             //MessageBox.Show(resp_str);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        string RandomIDString()
         {
-            SendLineToServer(textBox1.Text);
-            //SendLineToServer("$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47");
+            Guid g = Guid.NewGuid();
+            string GuidString = Convert.ToBase64String(g.ToByteArray());
+            GuidString = GuidString.Replace("=", "");
+            GuidString = GuidString.Replace("+", "");
+            return GuidString;
         }
     }
 }
