@@ -62,7 +62,10 @@ namespace PinPointRelay
                     LogLine(line);
                     SendLineToServer(line);
                 }
-                catch { }
+                catch(IOException e)
+                {
+                    MessageBox.Show("Serial port disconnected. \n\n" + e.ToString());
+                }
             }
         }
 
@@ -265,8 +268,13 @@ namespace PinPointRelay
             requestStream.Close();
 
             // grab te response and print it out to the console along with the status code
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string resp_str = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string resp_str = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            }
+            catch { }
+            
 
             //Console.WriteLine(response.StatusCode);
             //MessageBox.Show(resp_str);
@@ -279,6 +287,11 @@ namespace PinPointRelay
             GuidString = GuidString.Replace("=", "");
             GuidString = GuidString.Replace("+", "");
             return GuidString;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SendLineToServer("@ALERT-0-B");
         }
     }
 }
