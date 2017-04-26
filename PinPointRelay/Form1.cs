@@ -42,6 +42,8 @@ namespace PinPointRelay
             }
             catch { }
 
+            IDCodeBox.Text = IDCode;
+
             LogLine("Program started");
 
             ReadThread = new Thread(Read);
@@ -56,15 +58,34 @@ namespace PinPointRelay
         {
             while (true)
             {
+                if (sp == null || !sp.IsOpen)
+                {
+                    Thread.Sleep(100);
+                    continue;
+                }
                 try
                 {
                     string line = sp.ReadLine().Replace("\n", "").Replace("\r", "");
+                    if (line.StartsWith("@PANIC-M")) continue;
                     LogLine(line);
-                    SendLineToServer(line);
+                    try
+                    {
+                        SendLineToServer(line);
+                    }
+                    catch (System.Net.WebException)
+                    {
+                        LogLine("Failed to send previous line");
+                    }
                 }
-                catch(IOException e)
+                catch (IOException e)
                 {
                     MessageBox.Show("Serial port disconnected. \n\n" + e.ToString());
+                    SelectCOMPort(null);
+                }
+                catch (InvalidOperationException e)
+                {
+                    MessageBox.Show("Serial port not connected. \n\n" + e.ToString());
+                    SelectCOMPort(null);
                 }
             }
         }
@@ -274,7 +295,7 @@ namespace PinPointRelay
                 string resp_str = new StreamReader(response.GetResponseStream()).ReadToEnd();
             }
             catch { }
-            
+
 
             //Console.WriteLine(response.StatusCode);
             //MessageBox.Show(resp_str);
@@ -287,11 +308,6 @@ namespace PinPointRelay
             GuidString = GuidString.Replace("=", "");
             GuidString = GuidString.Replace("+", "");
             return GuidString;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SendLineToServer("@ALERT-0-B");
         }
     }
 }
